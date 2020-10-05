@@ -1,19 +1,24 @@
 const express = require("express");
 const querystring = require("querystring");
+//IMPORT THE MONGOOSE MODULE
 const mongoose = require('mongoose');
 //use port 3000 unless there exists a preconfigured port
 const port = process.env.PORT || 3000;
 const path = require('path');
 
-mongoose.connect("mongodb://localhost:27017", { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect("mongodb://localhost:27017/klack", { useUnifiedTopology: true, useNewUrlParser: true });
 const app = express();
 
 
-const messageSchema = mongoose.Schema({
+const messageSchema = new mongoose.Schema({
   user: String,
   message: String,
   timestamp: Number,
 });
+
+const Message = mongoose.model('Message', messageSchema);
+
+
 // List of all messages
 let messages = [];
 
@@ -38,7 +43,7 @@ function userSortFn(a, b) {
   return 0;
 }
 
-app.get("/messages", (request, response) => {
+app.get("/messages", async (request, response) => {
   // get the current time
   const now = Date.now();
 
@@ -58,6 +63,10 @@ app.get("/messages", (request, response) => {
   // update the requesting user's last access time
   users[request.query.for] = now;
 
+  const messages = await Message
+  .find()
+  .sort({'date': -1})
+  .limit(40);
   // send the latest 40 messages and the full user list, annotated with active flags
   response.send({ messages: messages.slice(-40), users: usersSimple });
 });
@@ -78,4 +87,6 @@ app.post("/messages", (request, response) => {
   response.send(request.body);
 });
 
-app.listen(port);
+app.listen(port, () => {
+  console.log("Started on PORT 3000");
+})

@@ -1,3 +1,8 @@
+************RESOURCES***********
+https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/mongoose
+
+
+
 # klack
 A basic messaging service written with NodeJS+Express, with a web client using the Fetch API.
 
@@ -37,8 +42,8 @@ Enter a nickname at the prompt upon loading the page.
 **********RUBRIC**************
 
 * Your app should connect to a MongoDB database named klack. 2.0 pts
-* This criterion is linked to a Learning OutcomeYour app defines a Message model with an appropriate schema. 2.0 pts
-* This criterion is linked to a Learning OutcomeEvery posted message to klack gets stored as an instance of the Message model.2.
-* This criterion is linked to a Learning OutcomeWhen the Node.js server for klack is exited and restarted, message history should be preserved. 2.0 pts
-* This criterion is linked to a Learning OutcomeLast active times for users (used to show which users have been recently active) should also be based on the message history in MongoDB and should persist across restarts of the server. 2.0 pts
+* Your app defines a Message model with an appropriate schema. 2.0 pts
+* Every posted message to klack gets stored as an instance of the Message model.2.
+* When the Node.js server for klack is exited and restarted, message history should be preserved. 2.0 pts
+* Last active times for users (used to show which users have been recently active) should also be based on the message history in MongoDB and should persist across restarts of the server. 2.0 pts
 Total Points: 10.0
