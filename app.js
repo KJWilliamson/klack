@@ -30,8 +30,8 @@ app.use(express.json());
 
 // generic comparison function for case-insensitive alphabetic sorting on the name field
 function userSortFn(a, b) {
-  var nameA = a.name.toUpperCase(); // ignore upper and lowercase
-  var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+  let nameA = a.name.toUpperCase(); // ignore upper and lowercase
+  let  nameB = b.name.toUpperCase(); // ignore upper and lowercase
   if (nameA < nameB) {
     return -1;
   }
@@ -43,7 +43,7 @@ function userSortFn(a, b) {
   return 0;
 }
 
-app.get("/messages", async (request, response) => {
+app.get("/messages", (request, response) => {
   // get the current time
   const now = Date.now();
 
@@ -63,10 +63,8 @@ app.get("/messages", async (request, response) => {
   // update the requesting user's last access time
   users[request.query.for] = now;
 
-  const messages = await Message
-  .find()
-  .sort({'date': -1})
-  .limit(40);
+  const messages = new Message
+  
   // send the latest 40 messages and the full user list, annotated with active flags
   response.send({ messages: messages.slice(-40), users: usersSimple });
 });
@@ -77,7 +75,19 @@ app.post("/messages", (request, response) => {
   request.body.timestamp = timestamp;
 
   // append the new message to the message list
-  messages.push(request.body);
+  const message = new Message({
+    sender: request.body.sender,
+    messages: req.body.message,
+    timestamp: req.bdy.timestamp);
+  });
+
+  message.save()
+  .then(data => {
+    console.log('The message was saved to db', data);
+  })
+  .catch(err => {
+    console.log('Sorry. Unable to save message');
+  });
 
   // update the posting user's last access timestamp (so we know they are active)
   users[request.body.sender] = timestamp;
@@ -87,6 +97,7 @@ app.post("/messages", (request, response) => {
   response.send(request.body);
 });
 
-app.listen(port, () => {
-  console.log("Started on PORT 3000");
-})
+app.listen(process.env.PORT || 3000, function(){
+  console.log(`Listening on ${port}`)
+});
+

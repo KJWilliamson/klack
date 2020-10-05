@@ -1,6 +1,6 @@
 ************RESOURCES***********
 https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/mongoose
-
+https://www.youtube.com/watch?v=2yddJwL1Tpg&amp;t=263s
 
 
 # klack
