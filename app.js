@@ -1,8 +1,19 @@
 const express = require("express");
 const querystring = require("querystring");
-const port = 3000;
+const mongoose = require('mongoose');
+//use port 3000 unless there exists a preconfigured port
+const port = process.env.PORT || 3000;
+const path = require('path');
+
+mongoose.connect("mongodb://localhost:27017", { useUnifiedTopology: true, useNewUrlParser: true });
 const app = express();
 
+
+const messageSchema = mongoose.Schema({
+  user: String,
+  message: String,
+  timestamp: Number,
+});
 // List of all messages
 let messages = [];
 
@@ -67,4 +78,4 @@ app.post("/messages", (request, response) => {
   response.send(request.body);
 });
 
-app.listen(3000);
+app.listen(port);
