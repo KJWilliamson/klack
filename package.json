@@ -4,7 +4,7 @@
   "description": "A basic messaging service written with NodeJS+Express, with a web client using the Fetch API.",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -18,11 +18,7 @@
   },
   "homepage": "https://github.com/KenzieAcademy/klack#readme",
   "dependencies": {
-    "dotenv": "^8.2.0",
     "express": "^4.16.3",
-    "mongoose": "^5.10.7"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.4"
+    "mongoose": "^5.10.9"
   }
 }
